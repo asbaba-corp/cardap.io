@@ -33,7 +33,7 @@ export class GroupsController {
     return this.groupsService.join(joinGroupDto);
   }
 
-  @Patch(':id')
+  @Patch(':id/batch')
   joinBatch(@Body() joinGroupDto: JoinGroupBatchDto) {
     return this.groupsService.joinBatch(joinGroupDto);
   }
