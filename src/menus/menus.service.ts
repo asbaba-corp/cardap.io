@@ -10,4 +10,14 @@ export class MenusService {
     const menu = await this.menusRepository.save(serializedMenu);
     return menu;
   }
+
+  async findOne(id: string) {
+    const menu = await this.menusRepository.findOne(id);
+    return menu;
+  }
+
+  async findAll() {
+    const menus = await this.menusRepository.findAll();
+    return menus;
+  }
 }

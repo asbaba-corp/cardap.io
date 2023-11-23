@@ -16,7 +16,7 @@ export class MenusController {
     return response;
   }
 
-  /*  @Get()
+  @Get()
   findAll() {
     return this.menusService.findAll();
   }
@@ -24,5 +24,5 @@ export class MenusController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.menusService.findOne(id);
-  } */
+  }
 }
