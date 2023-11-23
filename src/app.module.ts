@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
-import { GroupsModule } from './groups/groups.module';
+import { GroupsModule } from './tables/groups.module';
+import { MenusModule } from './menus/menus.module';
 
 @Module({
-  imports: [GroupsModule],
+  imports: [GroupsModule, MenusModule],
   controllers: [],
   providers: [],
 })
