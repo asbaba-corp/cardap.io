@@ -1,11 +1,12 @@
 import { Controller, Get, Post, Body, Param, Patch } from '@nestjs/common';
-import { ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { MenusService } from './menus.service';
 import { CreateMenuDto } from './dto/create-menu.dto';
 import { UpdateMenuDto } from './dto/update-menu.dto';
 import { UpdateMenuItemDto } from './dto/update-menu-items.dto';
 import { CreateMenuItemDto } from './dto/create-menu-item.dto';
 
+@ApiTags('menus')
 @Controller('menus')
 export class MenusController {
   constructor(private readonly menusService: MenusService) { }
