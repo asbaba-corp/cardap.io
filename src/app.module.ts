@@ -1,10 +1,13 @@
 import { Module } from '@nestjs/common';
-import { GroupsModule } from './tables/groups.module';
 import { MenusModule } from './menus/menus.module';
+import { ConfigModule } from '@nestjs/config';
+import { DatabaseModule } from './database.module';
 
 @Module({
-  imports: [GroupsModule, MenusModule],
+  imports: [
+    ConfigModule.forRoot(),
+    MenusModule],
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class AppModule { }
