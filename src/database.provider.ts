@@ -10,9 +10,9 @@ export const databaseProviders = [
         ssl: true,
         url: process.env.PG_DATABASE_URL,
         entities: [
-            Menu
-        ],
-        synchronize: true,
+            Menu,
+            // @TODO: Add path for all .entity files of the project
+        ]
       });
 
       return dataSource.initialize();
