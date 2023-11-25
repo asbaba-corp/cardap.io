@@ -4,7 +4,6 @@ import { TablesGateway } from './table.gateway';
 
 @Module({
   imports: [],
-  controllers: [],
   providers: [TablesGateway],
 })
-export class TableModule {}
+export class TableModule { }

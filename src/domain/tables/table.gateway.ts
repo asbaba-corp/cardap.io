@@ -5,8 +5,8 @@ import {
   WebSocketServer,
   WsResponse,
 } from '@nestjs/websockets';
-import { from, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { randomUUID } from 'crypto';
+import { RedisService } from 'nestjs-redis';
 import { Server } from 'socket.io';
 
 @WebSocketGateway({
@@ -15,17 +15,39 @@ import { Server } from 'socket.io';
   },
 })
 export class TablesGateway {
+  private tables: string[] = [];
+
+  constructor(private readonly redisRepository: RedisService) {
+  }
+
   @WebSocketServer()
   server: Server;
 
-  @SubscribeMessage('events')
-  findAll(@MessageBody() data: any): Observable<WsResponse<number>> {
-    return from([1, 2, 3]).pipe(map(item => ({ event: 'events', data: item })));
+  async get(key: string) {
+    return await this.redisRepository.getClient().get(key);
   }
 
+  async set(key: string, value: string) {
+    return await this.redisRepository.getClient().set(key, value)
+  }
+
+
   @SubscribeMessage('joinTable')
-  async joinTable(@MessageBody() data: number): Promise<number> {
-    console.log('join table')
-    return data;
+  async joinTable(@MessageBody() data: {id?: string, participant: string}) {
+    console.log('jointable')
+    if (!data.id) {
+      data.id = randomUUID()
+    }
+    const tableExists = await this.get(data.id);
+    console.log(tableExists)
+    if (!tableExists) {
+      await this.set(data.id, JSON.stringify([data.participant]));
+    }
+/*     if (tableExists) {
+      
+      await this.set(data.id, JSON.stringify())
+    } */
+
+    return await this.get(data.id);
   }
 }

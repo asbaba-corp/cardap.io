@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { MenusService } from './menus.service';
 import { MenusController } from './menus.controller';
 import { menusProvider } from './menus.provider';
-import { DatabaseModule } from '../../infra/database/database.module';
+import { DatabaseModule } from '../../infra/database/postgres/database.module';
 
 @Module({
   imports: [DatabaseModule],
