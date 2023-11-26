@@ -7,7 +7,6 @@ export const databaseProviders = [
     useFactory: async () => {
       const dataSource = new DataSource({
         type: 'postgres',
-        ssl: true,
         url: process.env.PG_DATABASE_URL,
         entities: [
             Menu,
