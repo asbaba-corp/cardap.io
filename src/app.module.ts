@@ -15,6 +15,6 @@ import { RedisModule } from 'nestjs-redis';
     TableModule
   ],
   controllers: [],
-  providers: [TableModule],
+  providers: [],
 })
 export class AppModule { }
