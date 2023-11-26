@@ -1,15 +1,19 @@
-FROM node:16
+FROM cgr.dev/chainguard/node:latest-dev as build
 
-WORKDIR /usr/src/app
+WORKDIR /usr/app
 
-COPY package*.json ./
+COPY --chown=node:node package*.json ./
 
-RUN npm install
+RUN npm install --legacy-peer-deps
 
-COPY . .
+COPY --chown=node:node . .
 
 RUN npm run build
 
-EXPOSE 3000
+FROM cgr.dev/chainguard/node as production
 
-CMD ["npm", "start"]
+WORKDIR /usr/app
+
+COPY --chown=node:node --from=build /usr/app ./
+
+CMD ["dist/main.js"]
