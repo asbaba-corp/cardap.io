@@ -7,6 +7,7 @@ import {
 } from '@nestjs/websockets';
 import { RedisService } from 'nestjs-redis';
 import { Server } from 'socket.io';
+import { EnterTableDto } from './dto/enter-table.dto';
 
 @WebSocketGateway({
   cors: {
@@ -21,20 +22,20 @@ export class TablesGateway {
   }
 
   @SubscribeMessage('joinTable')
-  async joinTable(@MessageBody() data: { id: string, participant: string }) {
-    const table = await this.get(data.id);
+  async joinTable(@MessageBody() { participant, tableId }: EnterTableDto) {
+    const table = await this.get(tableId);
     if (!table) {
-      await this.set(data.id, JSON.stringify([data.participant]));
+      await this.set(tableId, JSON.stringify([participant]));
     }
     if (table) {
       const tableArray = JSON.parse(table) as Array<String>;
-      if (tableArray.includes(data.participant)) {
+      if (tableArray.includes(participant)) {
         return table;
       }
-      tableArray.push(data.participant)
-      await this.set(data.id, JSON.stringify(tableArray))
+      tableArray.push(participant)
+      await this.set(tableId, JSON.stringify(tableArray))
     }
-    return await this.get(data.id);
+    return await this.get(tableId);
   }
 
   @SubscribeMessage('closeTable')
