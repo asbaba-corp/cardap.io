@@ -1,13 +1,26 @@
-version: '3'
+version: '3.8'
 
 services:
-  nestjs-app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+
+  redis:
+    container_name: redis
+    image: "cgr.dev/chainguard/redis"
     ports:
-      - "3000:3000"
-    
-    volumes:
-      - .:/usr/src/app
-      - /usr/src/app/node_modules
+    - "6379:6379"
+    networks:
+      - app-network
+  pg:
+    container_name: pg
+    restart: always
+    ports:
+    - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: pg
+      POSTGRES_USER: pg
+    image: "postgres"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
