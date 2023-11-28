@@ -1,5 +1,5 @@
 import { DataSource } from 'typeorm';
-import { Menu } from '../../domain/menus/entities/menu.entity';
+import { Menu } from '../../../domain/menus/entities/menu.entity';
 
 export const databaseProviders = [
   {
@@ -7,7 +7,6 @@ export const databaseProviders = [
     useFactory: async () => {
       const dataSource = new DataSource({
         type: 'postgres',
-        ssl: true,
         url: process.env.PG_DATABASE_URL,
         entities: [
             Menu,
