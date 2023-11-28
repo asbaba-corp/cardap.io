@@ -1,10 +1,10 @@
 import { Controller, Get, Post, Body, Param, Patch } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { MenusService } from './menus.service';
-import { CreateMenuDto } from './dto/create-menu.dto';
-import { UpdateMenuDto } from './dto/update-menu.dto';
-import { UpdateMenuItemDto } from './dto/update-menu-items.dto';
-import { CreateMenuItemDto } from './dto/create-menu-item.dto';
+import { MenusService } from '@/domain/menus/menus.service';
+import { CreateMenuDto } from '@/domain/menus/dto/create-menu.dto';
+import { UpdateMenuDto } from '@/domain/menus/dto/update-menu.dto';
+import { UpdateMenuItemDto } from '@/domain/menus/dto/update-menu-items.dto';
+import { CreateMenuItemDto } from '@/domain/menus/dto/create-menu-item.dto';
 
 @ApiTags('menus')
 @Controller('menus')

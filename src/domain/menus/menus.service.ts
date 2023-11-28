@@ -1,10 +1,10 @@
 import { Repository } from 'typeorm';
-import { CreateMenuDto } from './dto/create-menu.dto';
 import { Menu } from './entities/menu.entity';
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
-import { UpdateMenuDto } from './dto/update-menu.dto';
-import { UpdateMenuItemDto } from './dto/update-menu-items.dto';
-import { CreateMenuItemDto } from './dto/create-menu-item.dto';
+import { UpdateMenuDto } from '@/domain/menus/dto/update-menu.dto';
+import { UpdateMenuItemDto } from '@/domain/menus/dto/update-menu-items.dto';
+import { CreateMenuItemDto } from '@/domain/menus/dto/create-menu-item.dto';
+import { CreateMenuDto } from '@/domain/menus/dto/create-menu.dto';
 
 @Injectable()
 export class MenusService {

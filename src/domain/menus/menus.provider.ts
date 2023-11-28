@@ -1,5 +1,5 @@
 import { DataSource } from 'typeorm';
-import { Menu } from './entities/menu.entity';
+import { Menu } from '@/domain/menus/entities/menu.entity'
 
 export const menusProvider = [
   {
