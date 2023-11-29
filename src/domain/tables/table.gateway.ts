@@ -8,6 +8,10 @@ import {
 import { RedisService } from 'nestjs-redis';
 import { Server } from 'socket.io';
 import { EnterTableDto } from '@/domain/tables/dto/enter-table.dto';
+import { OrderService } from '../order/order.service';
+import { AppendItemToOrderDto } from '../order/dto/append-item-to-order.dto';
+import { CreateOrderDto } from '../order/dto/create-order.dto';
+import { CloseParticipantOrderDto } from '../order/dto/close-participant-order.dto';
 
 @WebSocketGateway({
   cors: {
@@ -18,7 +22,7 @@ export class TablesGateway {
   @WebSocketServer()
   server: Server;
 
-  constructor(private readonly redisRepository: RedisService) {
+  constructor(private readonly redisRepository: RedisService, private readonly orderService: OrderService) {
   }
 
   @SubscribeMessage('joinTable')
@@ -47,20 +51,30 @@ export class TablesGateway {
     await this.delete(id)
   }
 
-  /*  @SubscribeMessage('order')
-   async order(@MessageBody() data: { tableId: string, participant: string, itemId: string, quantity: number }) {
-     await this.orderService.order(data)
-   } */
+  @SubscribeMessage('createOrder')
+  async createOrder(@MessageBody() data: CreateOrderDto) {
+    return await this.orderService.createOrder(data)
+  }
 
-  /*  @SubscribeMessage('closeTableOrder')
-   async order(@MessageBody() data: { tableId: string }) {
-     await this.orderService.close(data)
-   } */
+  @SubscribeMessage('appendItemToOrder')
+  async appendItemToOrder(@MessageBody() { itemId, quantity, price, orderId }: AppendItemToOrderDto) {
+    return await this.orderService.appendItemToOrder({
+      itemId,
+      quantity,
+      price,
+      orderId
+    })
+  }
 
-  /*  @SubscribeMessage('closeParticipantOrder')
-  async order(@MessageBody() data: { tableId: string, participant: string }) {
-    await this.orderService.closeParticipant(data)
-  } */
+  @SubscribeMessage('closeOrder')
+  async closeOrder(@MessageBody() orderId: string) {
+    return await this.orderService.closeOrder(orderId)
+  }
+
+  @SubscribeMessage('closeParticipantOrder')
+  async closeParticipantOrder(@MessageBody() data: CloseParticipantOrderDto) {
+    return await this.orderService.closeParticipantOrder(data);
+  }
 
   async get(key: string) {
     return await this.redisRepository.getClient().get(key);

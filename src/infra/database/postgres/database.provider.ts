@@ -1,5 +1,6 @@
 import { DataSource } from 'typeorm';
-import { Menu } from '../../../domain/menus/entities/menu.entity';
+import { Menu } from '@/domain/menus/entities/menu.entity';
+import { Order } from '@/domain/order/entities/Order';
 
 export const databaseProviders = [
   {
@@ -10,7 +11,7 @@ export const databaseProviders = [
         url: process.env.PG_DATABASE_URL,
         entities: [
             Menu,
-            // @TODO: Add path for all .entity files of the project
+            Order
         ]
       });
 
